@@ -23,8 +23,12 @@ interface ArticleTableProps {
 
 const ArticleTable = (props: ArticleTableProps) => {
   const { loading, error, data, limit } = props
+
+  const numColumns = Object.keys(ArticleFields).length
+  const valuesArticle = Object.values(ArticleFields)
+
   if (loading) {
-    return <SkeletonTable rows={limit} columns={5} />
+    return <SkeletonTable rows={limit} columns={numColumns} />
   }
 
   if (error) {
@@ -41,7 +45,7 @@ const ArticleTable = (props: ArticleTableProps) => {
         <Table>
           <TableHead>
             <TableRow>
-              {Object.values(ArticleFields).map((field) => (
+              {valuesArticle.map((field) => (
                 <TableCell key={field}>{field}</TableCell>
               ))}
             </TableRow>
@@ -49,7 +53,7 @@ const ArticleTable = (props: ArticleTableProps) => {
           <TableBody>
             {data.map((row) => (
               <TableRow key={row.articleid}>
-                {Object.values(ArticleFields).map((field) => (
+                {valuesArticle.map((field) => (
                   <TableCell key={field}>
                     {row[field as keyof Article]}
                   </TableCell>
